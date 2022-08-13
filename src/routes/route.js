@@ -33,12 +33,12 @@ let persons = [
 
 router.post("/can-vote", function (req, res) {
 	const votingAge = req.query.votingAge;
-	const canVote = persons.map((person) => {
+	persons.forEach((person) => {
 		person.age >= votingAge
 			? (person.votingStatus = true)
 			: (person.votingStatus = false);
 	});
-	res.send({ data: canVote });
+	res.send({ data: persons });
 });
 router.post("/voters", function (req, res) {
 	const votingAge = req.query.votingAge;

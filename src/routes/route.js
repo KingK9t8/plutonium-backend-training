@@ -6,4 +6,4 @@ const UserController = require("../controllers/userController");
 router.post("/createNewAuthor", UserController.createNewAuthor);
 router.get("/getAuthors", UserController.getAuthorData);
 
-module.exports = router;
+module.exports = router ;

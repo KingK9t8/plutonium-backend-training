@@ -11,4 +11,4 @@ const getAuthorData = async function (req, res) {
 	res.send({ "All authors": allAuthors });
 };
 
-module.exports = { createNewAuthor, getAuthorData };
+module.exports = { createNewAuthor, getAuthorData } ;

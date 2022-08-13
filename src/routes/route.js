@@ -10,6 +10,13 @@ let players = [
 		gender: "male",
 		city: "jalandhar",
 		sports: ["swimming"],
+		bookingNumber: 1,
+		sportId: "",
+		centerId: "",
+		type: "private",
+		slot: "16286598000000",
+		bookedOn: "31/08/2021",
+		bookedFor: "01/09/2021",
 	},
 	{
 		name: "gopal",
@@ -17,6 +24,13 @@ let players = [
 		gender: "male",
 		city: "delhi",
 		sports: ["soccer"],
+		bookingNumber: 2,
+		sportId: "",
+		centerId: "",
+		type: "private",
+		slot: "16286598000000",
+		bookedOn: "31/08/2021",
+		bookedFor: "01/09/2021",
 	},
 	{
 		name: "lokesh",
@@ -24,8 +38,71 @@ let players = [
 		gender: "male",
 		city: "mumbai",
 		sports: ["soccer"],
+		bookingNumber: 3,
+		sportId: "",
+		centerId: "",
+		type: "private",
+		slot: "16286598000000",
+		bookedOn: "31/08/2021",
+		bookedFor: "01/09/2021",
+	},
+	{
+		name: "kumar",
+		dob: "1/1/1990",
+		gender: "male",
+		city: "mumbai",
+		sports: ["soccer"],
+		bookingNumber: 4,
+		sportId: "",
+		centerId: "",
+		type: "private",
+		slot: "16286598000000",
+		bookedOn: "31/08/2021",
+		bookedFor: "01/09/2021",
 	},
 ];
+
+/* Write an api that books a slot for a player with relevant details. The api looks like POST /players/playerName/bookings/bookingId Ensure the below conditions:
+1. PlayerName and bookingId are path params You have to ensure the playerName received must exist in the players collection. If the playerName doesn’t exist in the players collection return an error message that says something relevant about player not being found.	
+2. For a valid playerName check if the bookingId is already present in the player’s booking. Again, for a repeated bookingId send an error message conveying the booking was already processed. For a relevant bookingId(which is new), add the booking object from request body to bookings array */
+
+router.post("/players/:playerName/bookings/:bookingId", function (req, res) {
+	let playerName = req.params.playerName;
+	let bookingId = req.params.bookingId;
+	bookingId = Number(bookingId);
+	let isPresent = false;
+	let isBooked = false;
+	let isUnique = true;
+	for (player of players) {
+		if (player.name === playerName) {
+			if (player.bookingNumber === bookingId) {
+				isBooked = true;
+				break;
+			}
+		}
+	}
+	for (player of players) {
+		if (player.name === playerName) {
+			isPresent = true;
+			break;
+		}
+	}
+	for (player of players) {
+		if (player.bookingNumber === bookingId) {
+			isUnique = false;
+			break;
+		}
+	}
+	let bookingArray = [];
+	if (isUnique) {
+		bookingArray.push(bookingId);
+		res.send(bookingArray);
+	} else if (isPresent) {
+		isBooked ? res.send(player) : res.send("Booking was already processed");
+	} else {
+		res.send("No such player exists");
+	}
+});
 
 router.post("/players", function (req, res) {
 	//LOGIC WILL COME HERE

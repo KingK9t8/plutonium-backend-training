@@ -12,3 +12,4 @@ const getAuthorData = async function (req, res) {
 };
 
 module.exports = { createNewAuthor, getAuthorData } ;
+ 

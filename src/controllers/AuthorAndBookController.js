@@ -26,7 +26,7 @@ const bookWrittenByAuthor = async function (req, res) {
 
 const priceUpdation = async function (req, res) {
 	let findAndUpdate = await newBooks
-		.findOneAndUpdate({ name: "Two states" }, { price: 100 }, { new: true })
+		.findOneAndUpdate({ name: "Harry Potter" }, { price: 200 }, { new: true })
 		.select({ author_id: 1, _id: 0 });
 	let findAuthor = await Authors.find(findAndUpdate).select({
 		author_name: 1,
@@ -39,9 +39,16 @@ const filterAuthorByPrice = async function (req, res) {
 	let author_id = await newBooks
 		.find({ price: { $gte: 50, $lte: 100 } })
 		.select({ author_id: 1, _id: 0 });
-	let arr = await author_id.map((x) => x.author_id);
-	let authors = await Authors.find({ author_id: { $in: arr } }).select({author_name:1});
-	res.send({ data: authors });
+	let authors = await Authors.find();
+	let result = [];
+	let newArr = author_id.map((x) => {
+		for (element of authors) {
+			if (element.author_id == x.author_id) {
+				result.push(element.author_name);
+			}
+		}
+	});
+	res.send({ data: result });
 };
 
 module.exports = {

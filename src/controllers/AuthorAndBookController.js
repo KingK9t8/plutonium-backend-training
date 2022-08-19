@@ -51,10 +51,16 @@ const filterAuthorByPrice = async function (req, res) {
 	res.send({ data: result });
 };
 
+const updateBookData = async function (req, res) {
+	const updationWithAuthorDetails = await newBooks.find().populate("author_details")
+	res.send({ data: updationWithAuthorDetails });
+};
+
 module.exports = {
 	createAuthor,
 	createBook,
 	bookWrittenByAuthor,
 	priceUpdation,
 	filterAuthorByPrice,
+	updateBookData,
 };

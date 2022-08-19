@@ -18,4 +18,4 @@ router.get("/getBooksData", bookController.getBooksData)
 
 router.get("/getBooksWithAuthorDetails", bookController.getBooksWithAuthorDetails)
 
-module.exports = router;
+module.exports = router; 

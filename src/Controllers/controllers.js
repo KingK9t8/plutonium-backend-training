@@ -4,16 +4,21 @@ const Order = require("../New Schema/orderSchema");
 
 const userAuthentication = async (req, res, next) => {
 	let isFreeAppUser = await req.headers["isfreeappuser"];
+	let data=req.body
 	if (isFreeAppUser === undefined) {
 		return res.send("Please give isFreeAppUser status");
 	} else {
-		req.isFreeAppUser=Boolean(isFreeAppUser)
-	}next()
+		isFreeAppUser === "true"
+			? (data["isFreeAppUser"] = true)
+			: (data["isFreeAppUser"] = false);
+			req.isFreeAppUser=data.isFreeAppUser
+	}
+	next();
 };
 
 const createUser = async (req, res) => {
 	let data = req.body;
-	data["isFreeAppUser"]=req.isFreeAppUser
+	data["isFreeAppUser"] = req.isFreeAppUser;
 	const newUser = await User.create(data);
 	res.send({ newUser: newUser });
 };
@@ -27,7 +32,7 @@ const createProduct = async (req, res) => {
 
 const createOrder = async (req, res) => {
 	let data = req.body;
-	data["isFreeAppUser"]=req.isFreeAppUser
+	data["isFreeAppUser"] = req.isFreeAppUser;
 	const productId = req.body.productId;
 	const userId = req.body.userId;
 	const userBalance = await User.findById(userId).select({

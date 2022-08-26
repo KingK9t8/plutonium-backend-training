@@ -7,14 +7,13 @@ const userAuthentication = async (req, res, next) => {
 	if (isFreeAppUser === undefined) {
 		return res.send("Please give isFreeAppUser status");
 	} else {
-		next();
-	}
+		req.isFreeAppUser=Boolean(isFreeAppUser)
+	}next()
 };
 
 const createUser = async (req, res) => {
 	let data = req.body;
-	let isFreeAppUser = req.headers["isfreeappuser"];
-	if (isFreeAppUser === "true") data["isFreeAppUser"] = true;
+	data["isFreeAppUser"]=req.isFreeAppUser
 	const newUser = await User.create(data);
 	res.send({ newUser: newUser });
 };
@@ -28,10 +27,7 @@ const createProduct = async (req, res) => {
 
 const createOrder = async (req, res) => {
 	let data = req.body;
-	let isFreeAppUser = req.headers["isfreeappuser"];
-	isFreeAppUser === "true"
-		? (data["isFreeAppUser"] = true)
-		: (data["isFreeAppUser"] = false);
+	data["isFreeAppUser"]=req.isFreeAppUser
 	const productId = req.body.productId;
 	const userId = req.body.userId;
 	const userBalance = await User.findById(userId).select({

@@ -48,7 +48,7 @@ const createOrder = async (req, res) => {
 		let OrderData = await Order.create(data);
 		return res.send({ OrderData: OrderData });
 	} else if (data["isFreeAppUser"] === false) {
-		if (userBalance.balance > productPrice.price) {
+		if (userBalance.balance >= productPrice.price) {
 			data["amount"] = productPrice.price;
 			let updatedUserBalance = await User.findByIdAndUpdate(userId, {
 				$inc: { balance: -productPrice.price },

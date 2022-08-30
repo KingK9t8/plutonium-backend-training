@@ -1,15 +1,6 @@
 const jwt = require("jsonwebtoken");
 const userModel = require("../models/userModel");
 
-const authJs = async function (req, res, next) {
-	let token = req.headers["x-Auth-token"];
-	if (!token) token = req.headers["x-auth-token"];
-	if (!token) return res.send("Please provide a valid token");
-	let decodedToken = jwt.verify(token, "a secret token for plutonium");
-	if (!decodedToken) return res.send("Invalid Token");
-	next();
-};
-
 const createUser = async function (req, res) {
 	let data = req.body;
 	if (!data.mobile) return res.send("Please provide a mobile number");
@@ -31,24 +22,19 @@ const userLogin = async function (req, res) {
 			batch: "Plutonium",
 			organisation: "FunctionUp",
 		},
-		"a secret token for plutonium"
+		"secret token for plutonium"
 	);
 	res.header("Token", newToken);
 	res.send({ data: newToken, status: true });
 };
 
 const getUserDetails = async function (req, res) {
-	const userId = req.params.userId;
-	const user = await userModel.findById(userId);
-	if (!user) return res.send("No user data found");
+	const userId=req.params.userId
 	const userData = await userModel.findById(userId);
 	res.send({ status: true, userData: userData });
 };
 
 const updateUserData = async function (req, res) {
-	const userId = req.params.userId;
-	const user = await userModel.findById(userId);
-	if (!user) return res.send("No user data found");
 	const userUpdationData = req.body;
 	const userUpdatedData = await userModel.findByIdAndUpdate(
 		userId,
@@ -60,9 +46,6 @@ const updateUserData = async function (req, res) {
 };
 
 const deleteData = async function (req, res) {
-	const userId = req.params.userId;
-	const user = await userModel.findById(userId);
-	if (!user) return res.send("No user data found");
 	const isDeleted = await userModel.findByIdAndUpdate(
 		userId,
 		{
@@ -75,7 +58,6 @@ const deleteData = async function (req, res) {
 };
 
 module.exports = {
-	authJs,
 	createUser,
 	userLogin,
 	getUserDetails,

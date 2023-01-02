@@ -1,6 +1,7 @@
 const db = require("../models");
 
 const Product = db.products;
+const Review=db.reviews
 
 const addProduct = async function (req, res) {
 	try {
@@ -64,6 +65,16 @@ const getPublishedProduct = async function (req, res) {
 	}
 };
 
+const getProductReviews=async function(req,res	){
+	const data=await Product.findAll({
+		include:[{
+			model:Review,
+			as:'review'
+		}],
+		where:{id:2}
+	})
+}
+
 module.exports = {
 	addProduct,
 	getAllProducts,
@@ -71,4 +82,5 @@ module.exports = {
 	updateProduct,
 	deleteProduct,
 	getPublishedProduct,
+	getProductReviews
 };

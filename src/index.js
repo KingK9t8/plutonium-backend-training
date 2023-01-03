@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import HeadingComponent from "./HeadingComponent";
+import HeadingComponentsUsingClass from "./HeadingComponentsUsingClass";
+import Counter from "./Counter";
+import List from "./List";
+import FormComponent from "./Form";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -31,59 +36,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 // 	);
 // }, 1000);
 
-const Logo = () => {
-	return (
-		<div id="logo">
-			<img src="google-logo.png" className="logo" alt="Google" />
-		</div>
-	);
-};
-
-// const SearchBar = () => {
-// 	<div id="searchbar">
-// 		<form>
-// 			<input type="text" />
-// 		</form>
-// 	</div>;
-// };
-
-const SearchBar = () => {
-	return (
-		<div id="search-bar">
-			<form className="search-bar">
-				<input type="text" placeholder="Search" />
-			</form>
-		</div>
-	);
-};
-
-const Buttons = () => {
-	return (
-		<div id="buttons">
-			<button className="buttons" type="submit">
-				Search
-			</button>
-			<button className="buttons" type="submit">
-				I am feeling lucky!
-			</button>
-		</div>
-	);
-};
-
-const Languages = (props) => {
-	return (
-		<div id="languages">
-			<h4>Google offered in : </h4>
-			<a href="google.com"> {props.languages}</a>
-		</div>
-	);
-};
-
 root.render(
 	<React.StrictMode>
-		<Logo />
-		<SearchBar />
-		<Buttons />
-		<Languages languages="Bengali" />
+		<HeadingComponent />
+		<HeadingComponentsUsingClass title="class component" />
+		<Counter />
+		<List />
+		<FormComponent />
 	</React.StrictMode>
 );
